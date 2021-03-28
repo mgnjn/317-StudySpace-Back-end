@@ -4,7 +4,8 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'Users', views.UserViewSet)
-
+router.register(r'Groups', views.GroupViewSet)
+# register everything else
 
 
 

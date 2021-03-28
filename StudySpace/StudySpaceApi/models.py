@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Make all pictures and other nullable fields nullable or will cause problems while posting
 
 class User(models.Model):
     firstName = models.CharField(max_length=20)
@@ -26,9 +26,9 @@ class Friends(models.Model):
 
 
 class Group(models.Model):
-    name = models.CharField(max_length=20)
+    groupName = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
-    picture = models.ImageField(upload_to="group")
+    picture = models.ImageField(upload_to="group", null=True)
 
 class Posts(models.Model):
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
