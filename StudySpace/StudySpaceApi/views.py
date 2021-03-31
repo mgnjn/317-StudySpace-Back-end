@@ -17,11 +17,43 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(user.firstName)
 
     @action(detail=False)
+    def lastName(self, request, *args, **kwargs):
+        user_id=request.GET.get('id')
+        user=self.queryset.get(id=user_id)
+        return Response(user.lastName)
+    
+    @action(detail=False)
+    def email(self, request, *args, **kwargs):
+        user_id=request.GET.get('id')
+        user=self.queryset.get(id=user_id)
+        return Response(user.email)
+
+    @action(detail=False)
+    def password(self, request, *args, **kwargs):
+        user_id=request.GET.get('id')
+        user=self.queryset.get(id=user_id)
+        return Response(user.password)
+    
+    @action(detail=False)
+    def registration_date(self, request, *args, **kwargs):
+        user_id=request.GET.get('id')
+        user=self.queryset.get(id=user_id)
+        return Response(user.registration_date)
+
+
+    @action(detail=False)
     def interest(self, request,*args, **kwargs):
         user_id = request.GET.get('id')
         user = self.queryset.get(id=user_id)
         
         return Response([user.interest1,user.interest2,user.interest3])
+    
+    @action(detail=False)
+    def program(self, request, *args, **kwargs):
+        user_id=request.GET.get('id')
+        user=self.queryset.get(id=user_id)
+        return Response(user.program)
+
 
     @action(detail=False)
     def matches(self, request,*args, **kwargs):
