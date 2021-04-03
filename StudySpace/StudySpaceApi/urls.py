@@ -5,6 +5,11 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'Users', views.UserViewSet)
 router.register(r'Groups', views.GroupViewSet)
+router.register(r'GroupUser', views.GroupUserViewSet)
+router.register(r'Responses',views.ResponseViewSet)
+router.register(r'Chats',views.ChatsViewSet)
+router.register(r'Posts',views.PostsViewSet)
+router.register(r'Friends',views.FriendsViewSet)
 # register everything else
 
 

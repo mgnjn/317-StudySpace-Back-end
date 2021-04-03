@@ -70,25 +70,28 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('groupName')
     serializer_class = GroupSerializer
 
-
-
-
 class GroupUserViewSet(viewsets.ModelViewSet):
     queryset = Group_User.objects.all().order_by('group_id')
     serializer_class = GroupUserSerializer
 
 
-# class PostsViewSet(viewsets.ModelViewSet):
-#     queryset = Posts.objects.all().order_by('groupName')
-#     serializer = PostsSerializer
+class PostsViewSet(viewsets.ModelViewSet):
+    queryset = Posts.objects.all().order_by('group_id')
+    serializer_class = PostsSerializer
 
-# class FriendsViewSet(viewsets.ModelViewSet):
-#     queryset = Friends.objects.all().order_by('groupName')
-#     serializer = FriendsSerializer
+class FriendsViewSet(viewsets.ModelViewSet):
+    queryset = Friends.objects.all().order_by('friend_id')
+    serializer_class = FriendsSerializer
 
-# class ReponseViewSet(viewsets.ModelViewSet):
-#     queryset = Chats.objects.all().order_by('groupName')
-#     serializer = ChatsSerializer
+class ResponseViewSet(viewsets.ModelViewSet):
+    queryset = Responses.objects.all().order_by('post_id')
+    serializer_class = ResponseSerializer
+
+class ChatsViewSet(viewsets.ModelViewSet):
+    queryset = Chats.objects.all().order_by('recipient')
+    serializer_class = ChatsSerializer
+
+
 
 # Create identical class for chats
 
