@@ -79,6 +79,24 @@ class PostsViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all().order_by('group_id')
     serializer_class = PostsSerializer
 
+    @action(detail=False)
+    def topPosts(self, request,*args, **kwargs):
+        user_id = request.GET.get('id')
+        groups = GroupUserViewSet.queryset.filter(user_id=user_id).values_list('group_id',flat=True)
+        
+        for i in range(len(groups)):
+            if i == 0:
+                posts = self.queryset.filter(group_id=groups[i])
+            else:
+                posts = posts | self.queryset.filter(group_id=groups[i])
+        posts = posts.order_by('upvotes')
+        serializer_context = {
+            'request': request,
+        }
+        ser = PostsSerializer(posts,many=True,context=serializer_context)
+        return Response(ser.data)
+
+
 class FriendsViewSet(viewsets.ModelViewSet):
     queryset = Friends.objects.all().order_by('friend_id')
     serializer_class = FriendsSerializer
@@ -86,6 +104,16 @@ class FriendsViewSet(viewsets.ModelViewSet):
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Responses.objects.all().order_by('post_id')
     serializer_class = ResponseSerializer
+
+    @action(detail=False)
+    def responsesPost(self, request,*args, **kwargs):
+        post_id = request.GET.get('post_id')
+        serializer_context = {
+            'request': request,
+        }
+        responses = self.serializer_class(self.queryset.filter(post_id=post_id), many=True,context=serializer_context)
+        return Response(responses.data)
+
 
 class ChatsViewSet(viewsets.ModelViewSet):
     queryset = Chats.objects.all().order_by('recipient')

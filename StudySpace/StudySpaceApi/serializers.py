@@ -24,7 +24,7 @@ class ChatsSerializer(serializers.HyperlinkedModelSerializer):
 class ResponseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Responses
-        fields = ('post_id','response_id','post','body')
+        fields = ('post_id','response_id','time','upvotes','body')
 
 class FriendsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -34,5 +34,5 @@ class FriendsSerializer(serializers.HyperlinkedModelSerializer):
 class PostsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Posts
-        fields = ('group_id','title','body')
+        fields = ('group_id','author','upvotes','title','time','body','picture')
 

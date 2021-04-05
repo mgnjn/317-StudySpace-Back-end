@@ -31,13 +31,19 @@ class Group(models.Model):
     picture = models.ImageField(upload_to="group", null=True)
 
 class Posts(models.Model):
-    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_id")
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    upvotes = models.IntegerField()
     title = models.CharField(max_length=30)
+    time = models.DateTimeField()
     body = models.TextField()
+    picture = models.ImageField(upload_to="posts", null=True)
 
 class Responses(models.Model):
     post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
-    response_id = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    response_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+    upvotes = models.IntegerField()
+    time = models.DateTimeField()
     body = models.TextField()
 
 class Chats(models.Model):
