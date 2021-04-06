@@ -9,6 +9,7 @@ from itertools import chain
 
 
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('lastName')
     serializer_class = UserSerializer
