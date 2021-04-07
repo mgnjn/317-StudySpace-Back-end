@@ -10,3 +10,8 @@ Password:password
 
 Health Check Page:
 http://127.0.0.1:8000/ht
+
+To run:
+
+Cd 317-StudySpace-Back-End
+python manage.py runserver
