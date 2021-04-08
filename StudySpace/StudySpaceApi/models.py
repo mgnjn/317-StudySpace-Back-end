@@ -15,7 +15,7 @@ class User(models.Model):
     picture = models.ImageField(upload_to="user")
 
     def __str__(self):
-        return self.lastName
+        return (self.firstName + " " + self.lastName)
 
     
 
