@@ -30,6 +30,7 @@ class Group(models.Model):
     groupName = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to="group", null=True)
+    tags = models.CharField(max_length=50)
 
 class Posts(models.Model):
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_id")

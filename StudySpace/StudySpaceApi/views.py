@@ -69,9 +69,43 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(userList)
     #Create get for all the parameters
 
+    
+
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('groupName')
     serializer_class = GroupSerializer
+
+    @action(detail=False)
+    def topGroups(self, request,*args, **kwargs):
+        user_id = request.GET.get('id')
+        user = UserViewSet.queryset.get(id=user_id)
+        group_match = {}
+        groups = GroupUserViewSet.queryset.filter(user_id=user_id).values_list("group_id",flat=True)
+        for i in self.queryset.values_list('id', flat=True):
+            if i in groups:
+                pass
+            else:
+                tags = self.queryset.filter(id=i).values_list('tags', flat=True)[0].split(',')
+                matches = 0
+                for j in tags:
+                    
+                    if j == user.interest1:
+                        matches += 1
+                    elif j == user.interest2:
+                        matches += 1
+                    elif j == user.interest3:
+                        matches += 1
+                group_match[i] = matches
+        
+        group_match = sorted(group_match, key=group_match.get, reverse=True)
+        
+        
+        
+        
+        
+        return Response([i for i in group_match[:5]])
+
+
 
 class GroupUserViewSet(viewsets.ModelViewSet):
     queryset = Group_User.objects.all().order_by('group_id')
@@ -103,6 +137,19 @@ class PostsViewSet(viewsets.ModelViewSet):
 class FriendsViewSet(viewsets.ModelViewSet):
     queryset = Friends.objects.all().order_by('friend_id')
     serializer_class = FriendsSerializer
+
+    @action(detail=False)
+    def friendsOnline(self, request,*args, **kwargs):
+        user_id = request.GET.get('user_id')
+        friends = self.queryset.filter(user_id=user_id).values_list('friend_id',flat=True)
+
+        for i in range(len(friends)):
+            if i == 0:
+                online = UserViewSet.queryset.filter(id=friends[i]).filter(online_status=True)
+            else:
+                online = online | UserViewSet.queryset.filter(id=friends[i]).filter(online_status=True)
+        
+        return Response(online.values_list('id',flat=True))
 
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Responses.objects.all().order_by('post_id')
