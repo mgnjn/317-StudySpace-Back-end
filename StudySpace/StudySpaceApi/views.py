@@ -57,7 +57,11 @@ class UserViewSet(viewsets.ModelViewSet):
         user=self.queryset.get(id=user_id)
         return Response(user.program)
 
-
+    @action(detail=False)
+    def groups(self, request, *args, **kwargs):
+        user_id = request.GET.get('id')
+        return Response(GroupUserViewSet.queryset.filter(user_id=user_id).values_list('group_id',flat=True))
+    
     @action(detail=False)
     def matches(self, request,*args, **kwargs):
         user_id = request.GET.get('id')

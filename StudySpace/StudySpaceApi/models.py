@@ -30,7 +30,7 @@ class Group(models.Model):
     groupName = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to="group", null=True)
-    tags = models.CharField(max_length=50)
+    tags = models.CharField(max_length=50) 
     slug = models.CharField(max_length=30)
 
 class Posts(models.Model):
@@ -40,7 +40,7 @@ class Posts(models.Model):
     title = models.CharField(max_length=30)
     time = models.DateTimeField()
     body = models.TextField()
-    picture = models.ImageField(upload_to="posts", null=True)
+    # picture = models.ImageField(upload_to="posts", null=True)
     slug = models.CharField(max_length=30)
 
 class Responses(models.Model):
