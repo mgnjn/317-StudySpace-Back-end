@@ -31,6 +31,7 @@ class Group(models.Model):
     description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to="group", null=True)
     tags = models.CharField(max_length=50)
+    slug = models.CharField(max_length=30)
 
 class Posts(models.Model):
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_id")
@@ -40,6 +41,7 @@ class Posts(models.Model):
     time = models.DateTimeField()
     body = models.TextField()
     picture = models.ImageField(upload_to="posts", null=True)
+    slug = models.CharField(max_length=30)
 
 class Responses(models.Model):
     post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
